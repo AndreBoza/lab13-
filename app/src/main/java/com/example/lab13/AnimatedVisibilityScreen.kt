@@ -1,4 +1,4 @@
-package com.example.lab13.ui
+package com.example.lab13
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -7,11 +7,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lab13.AnimatedBox
+import com.example.lab13.AnimatedSizeAndPositionBox
 
 @Composable
-fun AnimatedVisibilityScreen(modifier: Modifier = Modifier) {
-    var isVisible by remember { mutableStateOf(false) }
+fun AnimatedSizeAndPositionScreen(modifier: Modifier = Modifier) {
+    var isExpanded by remember { mutableStateOf(false) }
+    var isMoved by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -20,13 +21,18 @@ fun AnimatedVisibilityScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { isVisible = !isVisible }) {
-            Text(text = if (isVisible) "Ocultar cuadro" else "Mostrar cuadro")
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Button(onClick = { isExpanded = !isExpanded }) {
+                Text(text = if (isExpanded) "Reducir tamaño" else "Expandir tamaño")
+            }
+            Button(onClick = { isMoved = !isMoved }) {
+                Text(text = if (isMoved) "Mover a origen" else "Mover")
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Reutilizamos el componente AnimatedBox
-        AnimatedBox(isVisible = isVisible)
+        // Nuevo componente animado
+        AnimatedSizeAndPositionBox(isExpanded = isExpanded, isMoved = isMoved)
     }
 }
